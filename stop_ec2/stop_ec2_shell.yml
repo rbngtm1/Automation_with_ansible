@@ -1,0 +1,9 @@
+- hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: Change instance state from stopped to running
+      local_action: ec2
+      args:
+        state: running
+        instance_tags:
+          Name: ansible
