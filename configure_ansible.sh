@@ -14,3 +14,4 @@ sudo useradd ansible
 #echo 'ansible' | sudo -S passwd ansible # Note the password of ansible user here is ansible
 sudo bash -c "cat /etc/sudoers | sed 's/.*group to run networking.*/ansible    ALL=(ALL)    NOPASSWD: ALL\n\n&/' | sed 's/.*group to run networking.*/ec2-user    ALL=(ALL)    NOPASSWD: ALL\n\n&/' > /etc/sudoers.placeholder"
 sudo cp /etc/sudoers.placeholder /etc/sudoers
+sudo pip install boto
