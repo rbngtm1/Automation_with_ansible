@@ -1,0 +1,19 @@
+---
+- hosts: "{{ target }}"
+  tasks:
+    - name: verify java installation
+      shell: |
+        java -version
+      register: reg_java_out
+      ignore_errors: yes
+    - name: check if java installed
+      set_fact:
+        java_install: "{% if reg_java_out.rc==0 %}installed{% else %}not_installed{% endif %}"
+    - debug: var=ansible_facts
+    - name: write the output to the file
+      shell: |
+        echo "java on machine {{ ansible_hostname }} has {{java_install}} with  {{reg_java_out.stderr_lines[0]}}" > ~/out.txt
+      register: shell_out
+      delegate_to: localhost
+    - name: shell out print
+      debug: var=shell_out.cmd
